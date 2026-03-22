@@ -4,10 +4,10 @@ interface SignaturePreviewProps {
 	signatureRef: RefObject<HTMLDivElement | null>;
 	data: {
 		name: string;
-		position: string;
+		jobtitle: string;
 		email: string;
 		photoUrl: string;
-		phone: string;
+		tel: string;
 		website: string;
 	};
 }
@@ -88,7 +88,7 @@ export default function SignaturePreview({
 											letterSpacing: "1px",
 										}}
 									>
-										{data.position ? data.position : "Hardworker"}
+										{data.jobtitle ? data.jobtitle : "Hardworker"}
 									</div>
 								</div>
 								<table cellPadding={0} cellSpacing={0} border={0}>
@@ -150,7 +150,7 @@ export default function SignaturePreview({
 													width="10"
 													height="10"
 													style={{ display: "block" }}
-													alt="Phone"
+													alt="tel"
 												/>
 											</td>
 											<td
@@ -160,7 +160,7 @@ export default function SignaturePreview({
 												}}
 											>
 												<a
-													href={`tel:${data.phone}`}
+													href={`tel:${data.tel}`}
 													style={{
 														fontSize: "10px",
 														color: "#ffffff",
@@ -174,7 +174,7 @@ export default function SignaturePreview({
 													<span
 														style={{ color: "#ffffff", textDecoration: "none" }}
 													>
-														{data.phone ? data.phone : "+380123456789"}
+														{data.tel ? data.tel : "+380123456789"}
 													</span>
 												</a>
 											</td>
