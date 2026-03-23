@@ -22,23 +22,23 @@ export default function SignatureGenerator() {
 	const [errors, setErrors] = useState<Record<string, string>>({});
 	const [touched, setTouched] = useState<Record<string, boolean>>({});
 
-	const validateForm = (fieldName?: string) => {
+	const validateForm = () => {
 		const newErrors: Record<string, string> = {};
 
-		if (!data.name.trim()) newErrors.name = "Mandatory field";
-		if (!data.jobtitle.trim()) newErrors.jobtitle = "Mandatory field";
-		if (!data.website.trim()) newErrors.website = "Mandatory field";
+		if (!data.name.trim()) newErrors.name = "Name is required";
+		if (!data.jobtitle.trim()) newErrors.jobtitle = "Position is required";
+		if (!data.website.trim()) newErrors.website = "Required field";
 
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		if (!data.email.trim()) {
-			newErrors.email = "Mandatory field";
+			newErrors.email = "Email is required";
 		} else if (!emailRegex.test(data.email)) {
 			newErrors.email = "Invalid format";
 		}
 
 		const telRegex = /^[\+\d\s\-\(\)]+$/;
 		if (!data.tel.trim()) {
-			newErrors.tel = "Mandatory field";
+			newErrors.tel = "Phone is required";
 		} else if (!telRegex.test(data.tel)) {
 			newErrors.tel = "Invalid format";
 		}
@@ -47,38 +47,11 @@ export default function SignatureGenerator() {
 		return Object.keys(newErrors).length === 0;
 	};
 
-	// 3. Обробник виходу з інпуту
 	const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
 		const { name } = e.target;
 		setTouched((prev) => ({ ...prev, [name]: true }));
 		validateForm();
 	};
-
-	// const validateForm = () => {
-	// 	const newErrors: Record<string, string> = {};
-
-	// 	if (!data.name.trim()) newErrors.name = "Mandatory field";
-	// 	if (!data.jobtitle.trim()) newErrors.jobtitle = "Mandatory field";
-	// 	if (!data.website.trim()) newErrors.website = "Mandatory field";
-	// 	if (!data.photoUrl?.trim()) newErrors.photoUrl = "Mandatory field";
-
-	// 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-	// 	if (!data.email.trim()) {
-	// 		newErrors.email = "Mandatory field";
-	// 	} else if (!emailRegex.test(data.email)) {
-	// 		newErrors.email = "Invalid format";
-	// 	}
-
-	// 	const telRegex = /^[\+\d\s\-\(\)]+$/;
-	// 	if (!data.tel.trim()) {
-	// 		newErrors.tel = "Mandatory field";
-	// 	} else if (!telRegex.test(data.tel)) {
-	// 		newErrors.tel = "`Invalid format`";
-	// 	}
-
-	// 	setErrors(newErrors);
-	// 	return Object.keys(newErrors).length === 0;
-	// };
 
 	const handleCopyHtml = async () => {
 		if (!validateForm()) return;
@@ -158,6 +131,8 @@ export default function SignatureGenerator() {
 
 				<div className="flex flex-col gap-4">
 					<form
+						method="POST"
+						action="#"
 						className="flex flex-col gap-2"
 						onSubmit={(e) => e.preventDefault()}
 					>
@@ -165,90 +140,58 @@ export default function SignatureGenerator() {
 							name="name"
 							error={errors.name}
 							isTouched={touched.name}
-						>
-							<input
-								name="name"
-								id="name"
-								autoComplete="name"
-								className={`border p-2 rounded transition-colors dark:bg-slate-800 ${
-									touched.name && errors.name
-										? "border-red-500"
-										: "border-slate-300 dark:border-slate-700"
-								}`}
-								placeholder="Full Name"
-								value={data.name}
-								onChange={(e) => setData({ ...data, name: e.target.value })}
-								onBlur={handleBlur}
-							/>
-						</InputField>
+							id="name"
+							autoComplete="name"
+							type="text"
+							placeholder="Full Name"
+							value={data.name}
+							onChange={(e) => setData({ ...data, name: e.target.value })}
+							onBlur={handleBlur}
+						/>
 
-            <InputField
+						<InputField
 							name="jobtitle"
 							error={errors.jobtitle}
 							isTouched={touched.jobtitle}
-						>
-							<input
-								name="jobtitle"
-								id="jobtitle"
-								autoComplete="organization-title"
-								className={`border p-2 rounded transition-colors dark:bg-slate-800 ${
-									touched.jobtitle && errors.jobtitle
-										? "border-red-500"
-										: "border-slate-300 dark:border-slate-700"
-								}`}
-								placeholder="Position"
-								value={data.jobtitle}
-								onChange={(e) => setData({ ...data, jobtitle: e.target.value })}
-								onBlur={handleBlur}
-							/>
-						</InputField>
+							type="text"
+							id="jobtitle"
+							autoComplete="organization-title"
+							placeholder="Position"
+							value={data.jobtitle}
+							onChange={(e) => setData({ ...data, jobtitle: e.target.value })}
+							onBlur={handleBlur}
+						/>
 
 						<InputField
 							name="email"
+							id="email"
+							type="email"
+							autoComplete="email"
+							placeholder="Email"
 							error={errors.email}
 							isTouched={touched.email}
-						>
-							<input
-								name="email"
-								id="email"
-								type="email"
-								autoComplete="email"
-								className={`border p-2 rounded transition-colors dark:bg-slate-800 ${
-									touched.email && errors.email
-										? "border-red-500"
-										: "border-slate-300 dark:border-slate-700"
-								}`}
-								placeholder="Email"
-								value={data.email}
-								onChange={(e) => setData({ ...data, email: e.target.value })}
-								onBlur={handleBlur}
-							/>
-						</InputField>
+							value={data.email}
+							onChange={(e) => setData({ ...data, email: e.target.value })}
+							onBlur={handleBlur}
+						/>
 
-            <InputField
+						<InputField
 							name="tel"
+							id="tel"
+							placeholder="Phone"
+							autoComplete="tel"
+							type="text"
 							error={errors.tel}
 							isTouched={touched.tel}
-						>
-							<input
-								name="tel"
-								id="tel"
-								autoComplete="organization-title"
-								className={`border p-2 rounded transition-colors dark:bg-slate-800 ${
-									touched.tel && errors.tel
-										? "border-red-500"
-										: "border-slate-300 dark:border-slate-700"
-								}`}
-								placeholder="Phone"
-								value={data.tel}
-								onChange={(e) => setData({ ...data, tel: e.target.value })}
-								onBlur={handleBlur}
-							/>
-						</InputField>
+							value={data.tel}
+							onChange={(e) => setData({ ...data, tel: e.target.value })}
+							onBlur={handleBlur}
+						/>
 
 						<input
 							className="border p-2 rounded hidden dark:text-slate-400"
 							placeholder="URL фото"
+							name="photourl"
 							value={data.photoUrl}
 							onChange={(e) => setData({ ...data, photoUrl: e.target.value })}
 							// style={{ borderColor: errors.photoUrl ? "red" : "inherit" }}
@@ -285,6 +228,7 @@ export default function SignatureGenerator() {
 								{isUploading ? "Crop..." : "Center and load"}
 								<input
 									type="file"
+									name="photo"
 									accept="image/png, image/jpeg"
 									onChange={handleImageUpload}
 									className="hidden"
@@ -297,13 +241,20 @@ export default function SignatureGenerator() {
 								</p>
 							)}
 						</div>
-						{/* Додай кнопку submit (можна приховану), щоб автокомпліт працював краще */}
-						<button type="submit" className="hidden" />
+						<button
+							type="submit"
+							style={{
+								position: "absolute",
+								opacity: 0,
+								pointerEvents: "none",
+							}}
+							tabIndex={-1}
+						/>
 					</form>
 				</div>
 			</div>
 			<div className="w-2/3 flex flex-col gap-4 dark:bg-slate-950">
-					<SignaturePreview signatureRef={signatureRef} data={data} />
+				<SignaturePreview signatureRef={signatureRef} data={data} />
 				<div className="flex gap-4">
 					<button
 						onClick={handleCopyVisual}
