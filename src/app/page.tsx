@@ -236,7 +236,7 @@ export default function SignatureGenerator() {
 								/>
 							</label>
 							{data.photoUrl !==
-								"https://avatars.githubusercontent.com/u/9919?s=100&v=4" && (
+								"https://res.cloudinary.com/dfs8grejr/image/upload/v1774262461/Foxy_Avatar_u6dzfb.png" && (
 								<p className="text-xs text-green-500 text-center">
 									Photo uploaded!
 								</p>
