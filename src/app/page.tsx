@@ -10,7 +10,8 @@ export default function SignatureGenerator() {
 		name: "",
 		jobtitle: "",
 		email: "",
-		photoUrl: "https://avatars.githubusercontent.com/u/9919?s=100&v=4",
+		// photoUrl: "https://avatars.githubusercontent.com/u/9919?s=100&v=4",
+    photoUrl: 'https://res.cloudinary.com/dfs8grejr/image/upload/v1774262461/Foxy_Avatar_u6dzfb.png',
 		tel: "",
 		website: "www.eliftech.com",
 	});

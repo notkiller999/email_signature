@@ -77,7 +77,7 @@ export default function SignaturePreview({
 											marginBottom: "4px",
 										}}
 									>
-										{data.name ? data.name : "Best Name"}
+										{data.name ? data.name : "Your Name"}
 									</div>
 									<div
 										style={{
@@ -88,7 +88,7 @@ export default function SignaturePreview({
 											letterSpacing: "1px",
 										}}
 									>
-										{data.jobtitle ? data.jobtitle : "Hardworker"}
+										{data.jobtitle ? data.jobtitle : "Your Position"}
 									</div>
 								</div>
 								<table cellPadding={0} cellSpacing={0} border={0}>

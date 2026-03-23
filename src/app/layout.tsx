@@ -15,6 +15,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Email Signature App",
   description: "Generate your signature for emails",
+  icons: {
+    icon: '/favicon.png'
+  }
 };
 
 export default function RootLayout({
