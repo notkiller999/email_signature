@@ -60,15 +60,21 @@ export async function getCroppedImg(
     throw new Error('No 2d context');
   }
 
-  // Встановлюємо розміри кропу
-  croppedCanvas.width = pixelCrop.width;
-  croppedCanvas.height = pixelCrop.height; // Виправлено: було canvas.height
+  // Обмежуємо розмір результату, щоб аватар з 12МП фото
+  // не перетворювався на кількамегабайтний base64
+  const MAX_OUTPUT_SIZE = 500;
+  const scale = Math.min(1, MAX_OUTPUT_SIZE / Math.max(pixelCrop.width, pixelCrop.height));
+  const outputWidth = Math.round(pixelCrop.width * scale);
+  const outputHeight = Math.round(pixelCrop.height * scale);
+
+  croppedCanvas.width = outputWidth;
+  croppedCanvas.height = outputHeight;
 
   // Заливаємо фон білим, щоб уникнути чорних країв
   croppedCtx.fillStyle = '#ffffff';
   croppedCtx.fillRect(0, 0, croppedCanvas.width, croppedCanvas.height);
 
-  // Копіюємо частину з оригінального canvas
+  // Копіюємо частину з оригінального canvas з масштабуванням до outputWidth/outputHeight
   croppedCtx.drawImage(
     canvas,
     pixelCrop.x,
@@ -77,12 +83,12 @@ export async function getCroppedImg(
     pixelCrop.height,
     0,
     0,
-    pixelCrop.width,
-    pixelCrop.height
+    outputWidth,
+    outputHeight
   );
 
-  // Зберігаємо як PNG
-  return croppedCanvas.toDataURL('image/png');
+  // Зберігаємо як JPEG, щоб тримати розмір payload невеликим
+  return croppedCanvas.toDataURL('image/jpeg', 0.85);
 }
 
 function rotateSize(width: number, height: number, rotation: number) {
